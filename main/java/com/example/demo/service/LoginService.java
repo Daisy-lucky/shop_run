@@ -11,15 +11,15 @@ public class LoginService {
     @Autowired
     private UserRepository userRepository;
 
-    public boolean judge(String phone,String pass){
+    public int judge(String phone,String pass){
         User user=userRepository.findByPhoneAndPassword(phone,pass);
         try {
             if (!(user.getName().equals(null))){
-                return true;
+                return user.getId();
             }
         }catch (Exception e){
-            return false;
+            return -1;
         }
-        return false;
+        return -1;
     }
 }

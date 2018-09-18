@@ -147,15 +147,17 @@
 										</tr>
 										<tr class="task" th:each="task:${ing}">
 											<td class="cell-icon"><i class="icon-checker high"></i></td>
-											<td class="cell-title"><div th:text="${task.goods_id}"></div></td>
+											<td class="cell-title"><div th:text="${task.goodname}"></div></td>
 											<td class="cell-status hidden-phone hidden-tablet"><b class="due">进行中</b></td>
 											<td class="cell-time align-right" th:text="${task.time}"></td>
-											<td class="cell-time align-right"><form  th:action="taskrun"><input type="submit" name="id" th:value="${task.id}"></form></td>
+											<td class="cell-time align-right"><form  th:action="taskrun">
+												<input type="hidden" name="id" th:value="${task.id}">
+												<input type="submit"  th:value="完成"></form></td>
 										</tr>
 									
 										<tr class="task resolved" th:each="taskw:${wait}">
 											<td class="cell-icon"><i class="icon-checker high"></i></td>
-											<td class="cell-title"><div th:text="${taskw.goods_id}"></div></td>
+											<td class="cell-title"><div th:text="${taskw.goodname}"></div></td>
 											<td class="cell-status hidden-phone hidden-tablet"></td>
 											<td class="cell-time align-right" th:text="${taskw.time}"></td>
 											<td class="cell-time align-right">等待确认</td>
@@ -163,7 +165,7 @@
 									
 										<tr class="task resolved" th:each="tasked:${ed}">
 											<td class="cell-icon"><i class="icon-checker high"></i></td>
-											<td class="cell-title"><div th:text="${tasked.goods_id}"></div></td>
+											<td class="cell-title"><div th:text="${tasked.goodname}"></div></td>
 											<td class="cell-status hidden-phone hidden-tablet"></td>
 											<td class="cell-time align-right" th:text="${tasked.time}"></td>
 											<td class="cell-time align-right">已完成</td>
