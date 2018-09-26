@@ -13,4 +13,9 @@ public class NowTime {
 
         return simpleDateFormat.format(new Date());
     }
+    public String getTimeFile(){//获得文件名
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("HHmmss");
+
+        return simpleDateFormat.format(new Date());
+    }
 }

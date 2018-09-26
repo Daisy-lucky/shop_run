@@ -6,6 +6,7 @@ import com.example.demo.Repository.FriendRepository;
 import com.example.demo.Repository.UserRepository;
 import com.example.demo.entity.Comment;
 import com.example.demo.entity.Friend;
+import com.example.demo.entity.User;
 import com.example.demo.service.CutStringService;
 import com.example.demo.service.FileService;
 import com.example.demo.service.NowTime;
@@ -42,8 +43,11 @@ public class FriendCircleController {
     private FileService fileService;
 
     @RequestMapping("friendcircle")//进入页面
-    public String gopage(Model model) {
+    public String gopage(Model model,HttpSession session) {
 
+        int id=(int)session.getAttribute("login");
+        User user=userRepository.getOne(id);
+        model.addAttribute("user",user);
         Sort sort = new Sort(Sort.Direction.DESC, "id");
         List<Friend> list = friendRepository.findAll(sort);
         model.addAttribute("list", list);
@@ -53,8 +57,12 @@ public class FriendCircleController {
     @RequestMapping("newword")//新建信息
     public String word(@RequestParam("word") String word, @RequestParam("file") MultipartFile file, HttpSession session) {
         int id = (int) session.getAttribute("login");
-
-        String path = "D:/Testdownload/" + file.getOriginalFilename();
+        String type=file.getContentType();
+        String str=file.getOriginalFilename();
+        int x=str.lastIndexOf(".");
+        str=str.substring(x,str.length());
+        str=nowTime.getTimeFile()+str;
+        String path = "D:/Testdownload/" +str;
         try {
             byte[] ff = file.getBytes();
             fileService.file(ff, path);
@@ -72,7 +80,7 @@ public class FriendCircleController {
         friend.setUsername(userRepository.getOne(id).getName());
         friend.setWord(word);
         if (!file.isEmpty()) {
-            friend.setPhoto("http://localhost:8080/"+file.getOriginalFilename());
+            friend.setPhoto("http://localhost:8080/"+str);
         }
         friendRepository.save(friend);
 

@@ -17,9 +17,17 @@ public class User {
 	private String sex;
 	private String phone;
 	private String password;
+	private String photo;//头像
 	private String dorm;//宿舍
-	
-	
+
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+
 	public int getId() {
 		return id;
 	}
