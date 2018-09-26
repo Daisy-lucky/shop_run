@@ -18,20 +18,16 @@ public class CreateGoodsController {
 
 
     @RequestMapping("creategoods.html")//跳转到新建物品页面
-    public String gotopage(){
+    public String gotopage() {
         return "creategoods";
     }
 
 
-
-
-
-
     @RequestMapping("goods")
-    public String goods(@RequestParam("name")String name, @RequestParam("number")String number,
-                        @RequestParam("money")String money, @RequestParam("describe")String describe, HttpSession session){
-        int login=(int)session.getAttribute("login");
-        Goods goods=new Goods();
+    public String goods(@RequestParam("name") String name, @RequestParam("number") String number,
+                        @RequestParam("money") String money, @RequestParam("describe") String describe, HttpSession session) {
+        int login = (int) session.getAttribute("login");
+        Goods goods = new Goods();
         goods.setDescribe(describe);
         goods.setBeatowal("4");
         goods.setMoney(money);

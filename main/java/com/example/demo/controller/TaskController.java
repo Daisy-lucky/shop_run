@@ -32,43 +32,42 @@ public class TaskController {
     private NowTime nowTime;
 
 
-
     @RequestMapping("task.html")//进入人物页面,
-    public String task(Model model,HttpSession session){
-        int login=(int)session.getAttribute("login");
+    public String task(Model model, HttpSession session) {
+        int login = (int) session.getAttribute("login");
 
-        List<Tasking> ing =taskingRepository.findByShopid(login);
-        List<Tasked> ed=taskedRepository.findByShopid(login);
-        List<TaskWait> wait=taskWaitRepository.findByShopid(login);
+        List<Tasking> ing = taskingRepository.findByShopid(login);
+        List<Tasked> ed = taskedRepository.findByShopid(login);
+        List<TaskWait> wait = taskWaitRepository.findByShopid(login);
 
-        for (TaskWait ss:wait){
-            System.out.println("这里是："+ss.getShopname());
+        for (TaskWait ss : wait) {
+            System.out.println("这里是：" + ss.getShopname());
         }
 
-        model.addAttribute("ing",ing);
-        model.addAttribute("ed",ed);
-        model.addAttribute("wait",wait);
+        model.addAttribute("ing", ing);
+        model.addAttribute("ed", ed);
+        model.addAttribute("wait", wait);
         return "task";
     }
 
 
     @RequestMapping("shop")//查看物品详细信息
-    public String goods(@RequestParam("id")int id, Model model){
-        Goods goods=goodsRepository.getOne(id);
-        model.addAttribute("goods",goods);
+    public String goods(@RequestParam("id") int id, Model model) {
+        Goods goods = goodsRepository.getOne(id);
+        model.addAttribute("goods", goods);
         return "goods";
     }
 
 
     @RequestMapping("sure")//确认任务
-    public String  sure(@RequestParam("id")int id, Model model, HttpSession session){
+    public String sure(@RequestParam("id") int id, Model model, HttpSession session) {
 
-        Goods goods=goodsRepository.getOne(id);
-        int login=(int)session.getAttribute("login");
-        if (goods.getUserId()==login){
+        Goods goods = goodsRepository.getOne(id);
+        int login = (int) session.getAttribute("login");
+        if (goods.getUserId() == login) {
             return "other-user";
-        }else {
-            Tasking tasking=new Tasking();
+        } else {
+            Tasking tasking = new Tasking();
             tasking.setShopid(login);
             tasking.setGoodsid(id);
             tasking.setGoodname(goods.getName());
@@ -77,7 +76,7 @@ public class TaskController {
             tasking.setUsername(userNameService.getName(goods.getUserId()));
             tasking.setTime(nowTime.getTime());
 
-            GoodsShop goodsShop=new GoodsShop();
+            GoodsShop goodsShop = new GoodsShop();
             goodsShop.setId(goods.getId());
             goodsShop.setBeatowal(goods.getBeatowal());
             goodsShop.setDescribe(goods.getDescribe());
@@ -93,9 +92,9 @@ public class TaskController {
     }
 
     @RequestMapping("taskrun")//任务完成,ing->wait
-    public String done(@RequestParam("id")int id){
-        Tasking tasking=taskingRepository.getOne(id);
-        TaskWait taskWait=new TaskWait();
+    public String done(@RequestParam("id") int id) {
+        Tasking tasking = taskingRepository.getOne(id);
+        TaskWait taskWait = new TaskWait();
         taskWait.setGoodname(tasking.getGoodname());
         taskWait.setGoodsid(tasking.getGoodsid());
         taskWait.setShopid(tasking.getShopid());

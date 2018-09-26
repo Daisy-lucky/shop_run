@@ -16,11 +16,10 @@ public class TableController {
     private GoodsRepository goodsRepository;
 
 
-
     @RequestMapping("table.html")//物品页面
-    public String table(Model model){
-        List<Goods> list=goodsRepository.findAll();
-        model.addAttribute("list",list);
+    public String table(Model model) {
+        List<Goods> list = goodsRepository.findAll();
+        model.addAttribute("list", list);
         return "table";
     }
 }

@@ -37,17 +37,17 @@ public class SureController {
     private GoodsRepository goodsRepository;
 
     @RequestMapping("sure.html")
-    public String sure(Model model, HttpSession session){
-        int id=(int)session.getAttribute("login");
-        List<TaskWait> list= taskWaitRepository.findByUserid(id);
-        model.addAttribute("wait",list);
+    public String sure(Model model, HttpSession session) {
+        int id = (int) session.getAttribute("login");
+        List<TaskWait> list = taskWaitRepository.findByUserid(id);
+        model.addAttribute("wait", list);
         return "sure";
     }
 
     @RequestMapping("suretask")//确认物品需要
-    public String suretask(@RequestParam("id")int id){
-        TaskWait taskWait=taskWaitRepository.getOne(id);
-        Tasked tasked=new Tasked();
+    public String suretask(@RequestParam("id") int id) {
+        TaskWait taskWait = taskWaitRepository.getOne(id);
+        Tasked tasked = new Tasked();
         tasked.setGoodname(taskWait.getGoodname());
         tasked.setGoodsid(taskWait.getGoodsid());
         tasked.setShopid(taskWait.getShopid());
@@ -64,18 +64,18 @@ public class SureController {
     }
 
     @RequestMapping("canceltask")//不需要物品,删除任务，重建物品
-    public String canceltask(@RequestParam("id")int id){
+    public String canceltask(@RequestParam("id") int id) {
 
-        TaskWait taskWait=taskWaitRepository.getOne(id);
-        int userid=taskWait.getUserid();
+        TaskWait taskWait = taskWaitRepository.getOne(id);
+        int userid = taskWait.getUserid();
 
         taskWaitRepository.deleteByUserid(userid);
         taskedRepository.deleteByUserid(userid);
         taskingRepository.deleteById(userid);
 
-        Goods goodsShop=new Goods();
+        Goods goodsShop = new Goods();
 
-        GoodsShop goods=goodsShopRepository.getOne(taskWait.getGoodsid());
+        GoodsShop goods = goodsShopRepository.getOne(taskWait.getGoodsid());
 
 
         goodsShop.setId(goods.getId());

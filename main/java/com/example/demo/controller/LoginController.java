@@ -15,16 +15,16 @@ public class LoginController {
     private LoginService loginService;
 
     @RequestMapping("help")//登陆页面
-    public String help(){
+    public String help() {
         return "other-login";
     }
 
     @RequestMapping("login")//登陆判断
-    public String login(@RequestParam("phone")String phone, @RequestParam("pass")String pass, HttpSession session){
-        if (loginService.judge(phone,pass)!=-1){
-            session.setAttribute("login",loginService.judge(phone,pass));
+    public String login(@RequestParam("phone") String phone, @RequestParam("pass") String pass, HttpSession session) {
+        if (loginService.judge(phone, pass) != -1) {
+            session.setAttribute("login", loginService.judge(phone, pass));
             return "redirect:table.html";
-        }else {
+        } else {
             return "err";
         }
 

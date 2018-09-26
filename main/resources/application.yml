@@ -1,4 +1,9 @@
+upload:
+  image:
+    path: D:/Testdownload/
 spring:
+  resources:
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:${upload.image.path}
   datasource:
     url: jdbc:mysql://localhost:3306/kindle
     username: root
