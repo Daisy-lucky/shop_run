@@ -25,6 +25,10 @@ public class LoginConfig  extends WebMvcConfigurerAdapter {
 
         // 排除配置
         addInterceptor.excludePathPatterns("/err");
+        addInterceptor.excludePathPatterns("bootstrap/css/bootstrap.min.css");
+        addInterceptor.excludePathPatterns("bootstrap/css/bootstrap-responsive.min.css");
+        addInterceptor.excludePathPatterns("css/theme.css");
+        addInterceptor.excludePathPatterns("images/icons/css/font-awesome.css");
         addInterceptor.excludePathPatterns("/help");
         addInterceptor.excludePathPatterns("/login");
 
