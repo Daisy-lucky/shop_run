@@ -55,33 +55,38 @@ public class FriendCircleController {
     }
 
     @RequestMapping("newword")//新建信息
-    public String word(@RequestParam("word") String word, @RequestParam("file") MultipartFile file, HttpSession session) {
+    public String word(@RequestParam("word") String word, @RequestParam(value = "file",required=false) MultipartFile file, HttpSession session) {
         int id = (int) session.getAttribute("login");
+
+        Friend friend = new Friend();
+        try {
         String type=file.getContentType();
         String str=file.getOriginalFilename();
         int x=str.lastIndexOf(".");
         str=str.substring(x,str.length());
         str=nowTime.getTimeFile()+str;
         String path = "D:/Testdownload/" +str;
-        try {
+
             byte[] ff = file.getBytes();
             fileService.file(ff, path);
             System.out.println("这里正常");
+            if (!file.isEmpty()) {
+                friend.setPhoto("http://localhost:8080/"+str);
+            }
+
         } catch (Exception e) {
             System.out.println("文件上传发生异常");
         }
 
+        User user=userRepository.getOne(id);
 
-        Friend friend = new Friend();
         friend.setComment("");
         friend.setlikes(0);
         friend.setTime(nowTime.getTime());
         friend.setuserid(id);
-        friend.setUsername(userRepository.getOne(id).getName());
+        friend.setUsername(user.getName());
+        friend.setUserphoto(user.getPhoto());
         friend.setWord(word);
-        if (!file.isEmpty()) {
-            friend.setPhoto("http://localhost:8080/"+str);
-        }
         friendRepository.save(friend);
 
         return "redirect:friendcircle";

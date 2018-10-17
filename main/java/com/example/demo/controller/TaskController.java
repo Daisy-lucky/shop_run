@@ -32,18 +32,20 @@ public class TaskController {
     private NowTime nowTime;
 
 
-    @RequestMapping("task.html")//进入人物页面,
+    @RequestMapping("task.html")//进入任务页面,
     public String task(Model model, HttpSession session) {
         int login = (int) session.getAttribute("login");
 
         List<Tasking> ing = taskingRepository.findByShopid(login);
         List<Tasked> ed = taskedRepository.findByShopid(login);
         List<TaskWait> wait = taskWaitRepository.findByShopid(login);
+        int count=ing.size()+wait.size();
 
         for (TaskWait ss : wait) {
             System.out.println("这里是：" + ss.getShopname());
         }
 
+        model.addAttribute("count",count);
         model.addAttribute("ing", ing);
         model.addAttribute("ed", ed);
         model.addAttribute("wait", wait);
