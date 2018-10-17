@@ -25,7 +25,31 @@ public class Friend {
     private int likes;//点赞
     private String comment;//评论
     private  int userid;
+    private String userphoto;
 
+    public int getLikes() {
+        return likes;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
+    }
+
+    public int getUserid() {
+        return userid;
+    }
+
+    public void setUserid(int userid) {
+        this.userid = userid;
+    }
+
+    public String getUserphoto() {
+        return userphoto;
+    }
+
+    public void setUserphoto(String userphoto) {
+        this.userphoto = userphoto;
+    }
 
     public int getId() {
         return id;
